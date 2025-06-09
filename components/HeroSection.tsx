@@ -1,5 +1,6 @@
 import React from 'react'
 import { Button } from './ui/button'
+import Auth from './Auth'
 
 const HeroSection = () => {
   return (
@@ -10,8 +11,10 @@ const HeroSection = () => {
         🚀 Create engaging YouTube Shorts with ease using our AI-powered tool.
       </p>
       <div className='mt-7 gap-8 flex'>
-        <Button size="lg" variant="secondary">View All templates</Button>
-        <Button size="lg" >Explore</Button>
+        <Button size="lg" variant="secondary" className='cursor-pointer'>View All templates</Button>
+        <Auth>
+          <Button size="lg" className='cursor-pointer' >Explore</Button>
+        </Auth>
       </div>
     </section>
   )

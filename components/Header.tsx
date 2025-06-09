@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import React from 'react'
 import { Button } from './ui/button'
+import Auth from './Auth'
 
 const Header = () => {
   return (
@@ -15,9 +16,11 @@ const Header = () => {
             <h2 className='text-2xl font-bold'>Video Gen</h2>
         </figure>
         <section>
-            <Button>
-                Get Started
+            <Auth>
+            <Button className='cursor-pointer'>
+                Get Started 
             </Button>
+            </Auth>
         </section>
     </header>
   )
