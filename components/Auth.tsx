@@ -9,33 +9,40 @@ const Auth = ({ children }: { children: React.ReactNode }) => {
 
   const onSignInClick = () => {
     signInWithPopup(auth, provider)
-  .then((result) => {
-    // This gives you a Google Access Token. You can use it to access the Google API.
-    const credential = GoogleAuthProvider.credentialFromResult(result);
-    if(!credential) return null;
-    const token = credential.accessToken;
-    // The signed-in user info.
-    const user = result.user;
-    console.log(user);
-    // IdP data available using getAdditionalUserInfo(result)
-    // ...
-  }).catch((error) => {
-    // Handle Errors here.
-    const errorCode = error.code;
-    const errorMessage = error.message;
-    // The email of the user's account used.
-    const email = error.customData.email;
-    // The AuthCredential type that was used.
-    const credential = GoogleAuthProvider.credentialFromError(error);
-    console.error('Error during sign-in:', errorCode, errorMessage, email, credential);
-  });
+      .then((result) => {
+        const credential = GoogleAuthProvider.credentialFromResult(result);
+        if (!credential) {
+          console.warn('No credential returned from Google sign-in');
+          return;
+        }
+        
+        const token = credential.accessToken;
+        const user = result.user;
+        console.log('Signed in user:', user);
+        // You might want to store user data in state/context here
+      })
+      .catch((error) => {
+        // Specifically handle popup closed case
+        if (error.code === 'auth/popup-closed-by-user') {
+          console.log('User closed the sign-in popup');
+          return;
+        }
+        
+        // Handle other errors
+        console.error('Error during sign-in:', {
+          code: error.code,
+          message: error.message,
+          email: error.customData?.email,
+          credential: GoogleAuthProvider.credentialFromError(error)
+        });
+      });
   }
 
   return (
-    <div onClick={onSignInClick}>
-        {children}
+    <div onClick={onSignInClick} style={{ cursor: 'pointer' }}>
+      {children}
     </div>
   )
 }
 
-export default Auth
+export default Auth;
