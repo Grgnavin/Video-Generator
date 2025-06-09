@@ -13,7 +13,6 @@ const Provider = ({ children }: { children: React.ReactNode }) => {
   const CreateUser = useMutation(api.user.createNewUser);
   useEffect(() => {
     const unSubscribe = onAuthStateChanged(auth,async (user) => {
-      console.log(user);
       if (!user) {
         redirect('/');
         return;
@@ -29,8 +28,6 @@ const Provider = ({ children }: { children: React.ReactNode }) => {
         email: user.email, 
         pictureUrl: user.photoURL  
       });
-      console.log("Result: ", res);
-      
     });
     return () => unSubscribe();
   }, [])
