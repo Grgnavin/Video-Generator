@@ -10,7 +10,7 @@ const AppHeader = () => {
     <div className='p-3 flex items-center justify-between'>
         <SidebarTrigger />
         <Image
-            src={user?.photoURL}
+            src={user?.pictureUrl as string}
             alt='User Avatar'
             width={40}
             height={40}

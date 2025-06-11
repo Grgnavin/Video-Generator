@@ -60,6 +60,8 @@ declare interface UserData {
   reload(): Promise<void>;
 }
 
+
+
 interface AuthProps {
   children: React.ReactNode;
   onUserAuthenticated?: (user: UserData) => void;

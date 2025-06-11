@@ -8,9 +8,11 @@ import { MenuItems } from '@/lib/constants'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { Gem } from 'lucide-react'
+import { useAuthContext } from '@/app/Provider'
 
 const AppSidebar = () => {
   const path = usePathname();
+  const { user } = useAuthContext();
   return (
     <Sidebar>
       <SidebarHeader>
@@ -54,7 +56,7 @@ const AppSidebar = () => {
         <footer className='p-4 border rounded-lg mb-6 bg-gray-800'>
             <section className='flex items-center justify-between'>
                 <Gem  className='text-gray-400'/>
-                <h2 className='text-gray-400'>5 Credits left</h2>
+                <h2 className='text-gray-400'><span>{user?.credits}</span> Credits left</h2>
             </section>
             <Button className='w-full mt-3'>Buy More Credits</Button>
         </footer>

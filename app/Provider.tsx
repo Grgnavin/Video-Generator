@@ -1,15 +1,16 @@
 "use client"
 import React, { useContext, useEffect } from 'react'
 import { ThemeProvider as NextThemesProvider } from "next-themes"
-import { onAuthStateChanged, User } from 'firebase/auth'
+import { onAuthStateChanged } from 'firebase/auth'
 import { auth } from '@/configs/fireBaseConfig'
 import { AuthContext } from './_context/AuthContext'
 import { redirect } from 'next/navigation'
 import { useMutation } from 'convex/react'
 import { api } from '@/convex/_generated/api'
+import { DbUser } from '@/lib/types'
 
 const Provider = ({ children }: { children: React.ReactNode }) => {
-  const[user, setUser] = React.useState<User | null>(null);
+  const[user, setUser] = React.useState<DbUser | null>(null);
   const CreateUser = useMutation(api.user.createNewUser);
   useEffect(() => {
     const unSubscribe = onAuthStateChanged(auth,async (user) => {
@@ -17,7 +18,6 @@ const Provider = ({ children }: { children: React.ReactNode }) => {
         redirect('/');
         return;
       }
-      setUser(user);
 
       if (!user.email || !user.displayName || !user.photoURL) {
         console.warn("Missing user info, not creating user in DB.");
@@ -28,6 +28,7 @@ const Provider = ({ children }: { children: React.ReactNode }) => {
         email: user.email, 
         pictureUrl: user.photoURL  
       });
+      setUser(res);
     });
     return () => unSubscribe();
   }, [])

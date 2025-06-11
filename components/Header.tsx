@@ -8,6 +8,8 @@ import Link from 'next/link'
 
 const Header = () => {
   const { user } = useAuthContext();
+  console.log('user in header', user?.pictureUrl);
+  
   return (
     <header className='p-4 shadow-md flex items-center justify-between'>
         <figure className='flex items-center gap-3'>
@@ -30,7 +32,13 @@ const Header = () => {
                     <Link href={`/dashboard`}>
                         <Button className='cursor-pointer' >Go to DashBoard</Button>
                     </Link>
-                        <Image src={user?.photoURL} alt='userimage' width={40} height={40} className='rounded-full'/>
+                            <Image
+                                src={user.pictureUrl}
+                                alt="user image"
+                                width={40}
+                                height={40}
+                                className="rounded-full"
+                            />
                 </div>
             )}
         </section>
