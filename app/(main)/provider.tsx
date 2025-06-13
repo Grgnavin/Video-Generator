@@ -23,7 +23,9 @@ const DashBoardProvider = ({ children }: { children: React.ReactNode }) => {
             <AppSidebar />
             <main className='w-full'>
                 <AppHeader />
-                {children}
+                <div className='p-10'>
+                    {children}
+                </div>
             </main>
         </SidebarProvider>
     </div>

@@ -8,7 +8,7 @@ import Link from 'next/link'
 
 const Header = () => {
   const { user } = useAuthContext();
-  console.log('user in header', user?.pictureUrl);
+  console.log('user in header', user);
   
   return (
     <header className='p-4 shadow-md flex items-center justify-between'>

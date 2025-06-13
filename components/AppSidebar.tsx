@@ -32,7 +32,9 @@ const AppSidebar = () => {
       <SidebarContent>
         <SidebarGroup>
             <section className='mx-5'>
-                <Button className='w-full'>+ Create new Video</Button>
+                <Link href={'/create-new-video'}>
+                    <Button className='w-full'>+ Create new Video</Button>
+                </Link>
             </section>
             <Separator className='mt-4'/>
             <SidebarMenu>

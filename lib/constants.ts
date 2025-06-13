@@ -22,3 +22,17 @@ export const MenuItems = [
         icon: WalletCards
     },
 ]
+
+export const Suggestions = [
+    "Historic Story",
+    "Kids Story",
+    "Movie Stories",
+    "AI Innovations",
+    "Horror Stories",
+    "True Crime Stories",
+    "Fantasy Adventures",
+    "Motivational Stories",
+    "Science Fiction",
+    "Romantic Stories",
+    "Mystery Thrillers",
+]
