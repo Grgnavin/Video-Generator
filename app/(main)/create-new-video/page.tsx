@@ -1,17 +1,22 @@
 "use client"
 import Topic from '@/components/Topic'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 const Page = () => {
     const[formData, setFormData] = useState<Record<string, string>>({});
 
+    // Solution 1: Log inside the state updater
     const HandleInputChange = (fieldName: string, fieldValue: string) => {
-        setFormData((prevData) => ({
-            ...prevData,
-            [fieldName]: fieldValue
-        }));
-        console.log(formData);
+        setFormData((prevData) => {
+            const newData = {
+                ...prevData,
+                [fieldName]: fieldValue
+            };
+            console.log("Updated form data:", newData);
+            return newData;
+        });
     }
+    
     
   return (
     <div>

@@ -10,3 +10,11 @@ export interface DbUser {
 export interface AuthContextType {
   user: DbUser | null;
 }
+
+export interface ScriptItem {
+  content: string;
+}
+
+export interface ScriptResponse {
+  script: ScriptItem[]
+};
