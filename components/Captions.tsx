@@ -18,7 +18,7 @@ const Captions = ({
                     className={`p-2 hover:border border-gray-300 rounded-lg cursor-pointer ${selectedCaption === caption.name && "border"}`}
                     onClick={() => {
                         setSelectedCaption(caption.name);
-                        HandleInputChange(caption.name, caption.style);
+                        HandleInputChange("caption", caption);
                     }}
                     >
                         <h2 className={caption.style}>{caption.name}</h2>
