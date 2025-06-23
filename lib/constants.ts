@@ -140,4 +140,5 @@ export type FormDataType = {
   videoStyle?: string;
   voice?: string;
   caption?: CaptionStyle
+  script?: string;
 };

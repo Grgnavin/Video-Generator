@@ -94,7 +94,10 @@ const Topic = ({
                         <div 
                         key={idx} 
                         className={`p-2 rounded-lg border cursor-pointer ${selectedScript === script.content ? "border-white bg-secondary" : ""}`} 
-                        onClick={() => setSelectedScript(script.content)}
+                        onClick={() => {
+                          setSelectedScript(script.content)
+                          HandleInputChange("script", script.content);
+                        }}
                         >
                             <h2 className="line-clamp-4 text-sm text-gray-300">{script.content}</h2>
                     </div>
