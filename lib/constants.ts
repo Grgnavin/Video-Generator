@@ -136,6 +136,7 @@ export type CaptionStyle = {
 };
 
 export type FormDataType = {
+  title?: string;
   topic?: string;
   videoStyle?: string;
   voice?: string;
