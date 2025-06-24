@@ -33,8 +33,6 @@ const Topic = ({
     }
   };
   
-  console.log(scripts);
-  
   return (
     <section>
       <h2 className="mb-1">Project Title</h2>

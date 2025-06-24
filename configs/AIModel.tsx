@@ -120,3 +120,124 @@ I've crafted two distinct 30-second scripts: "The Lost Star" and "The Magical Mu
     throw new Error("AI response is not valid JSON");
   }
 }
+
+export const generateImageScripts = async(script: string, videoStyle: string) => {
+  const ai = new GoogleGenAI({
+    apiKey: process.env.NEXT_PUBLIC_GEMINI_API_KEY,
+  });
+  const config = {
+    responseMimeType: 'application/json',
+  };
+  const model = 'gemini-2.0-flash';
+  const contents = [
+    {
+      role: 'user',
+      parts: [
+        {
+          text: `Generate Image prompt of ${videoStyle} style with all details for each scene for 30 second video: script: ${script}
+
+- Just give specifying image prompt depends on the story line
+-don't give camera angle image prompt
+- Follow the following schema and return json data (Max 4-5 images)
+-[
+    {
+        imageprompt: '',
+        sceneContent: '<Script Contents>'
+    }
+]`,
+        },
+      ],
+    },
+    {
+      role: 'model',
+      parts: [
+        {
+          text: `**Formulating Visual Prompts**
+
+I'm currently focused on constructing detailed image prompts for a 30-second video trailer. My primary objective is to capture the dramatic and suspenseful essence of the script through cinematic imagery. I'm meticulously crafting prompts that will elicit specific visuals to match the required tone.
+
+
+**Defining Image Styles**
+
+I've refined the approach to generating image prompts for the trailer. Initially, I focused on visual fidelity, but now I'm prioritizing the cinematic atmosphere. I'm building each prompt with specific style parameters for each scene. For the first scene, I'm aiming for a vintage, grainy black-and-white look reminiscent of a found photograph. I'm focusing on the subtle details of the suburban house to create an unsettling, yet alluring image.
+
+
+**Refining Prompt Construction**
+
+I'm now focusing on distilling the essence of each scene into precise image prompts. For the opening scene, I've expanded on the initial idea. The goal is now a captivating "grainy, black and white photograph" of a classic suburban house. I'm prioritizing the feeling of an old, found photograph with elements of eerie mystery. I am working on scene two by building a collage of newspaper clippings.
+
+
+**Formulating Image Ideas**
+
+I'm now fully immersed in developing detailed image prompts for each scene of the trailer. For the initial scene, I've honed in on creating that vintage, unsettling photograph of the suburban home. Now, I'm defining the prompts for subsequent scenes, specifically aiming to create a cinematic collage of newspaper headlines for scene two, and a voyeuristic, suspenseful shot of a neighbor observing the police activity for scene three.
+
+
+**Constructing Cinematic Scenes**
+
+I'm now fully immersed in developing detailed image prompts for each scene of the trailer. I've built the foundational prompts and am now expanding them with rich details. For the opening scene, I'm focusing on that vintage, unsettling photograph of the suburban home. I am defining the prompts for subsequent scenes, aiming to create a cinematic collage of newspaper headlines, and a suspenseful shot of a neighbor observing police activity. Finally, I will wrap up with a final "title card" style image.
+
+
+**Refining Scene Visuals**
+
+I've crafted detailed image prompts for each of the four scenes, aiming for a consistent cinematic style. The opening scene now focuses on an unsettling black and white photograph of the suburban house. For the second scene, I'm constructing a gritty, investigative collage of newspaper headlines. The third image will show a voyeuristic neighbor, while the final shot is a dramatic crime scene. All keywords and details are refined and in place.
+
+
+`,
+        },
+        {
+          text: `\`\`\`json
+[
+    {
+        "imageprompt": "A highly detailed, grainy, black and white 1980s photograph of a classic two-story suburban house. The house appears deceptively normal with a neat lawn, but long, ominous shadows stretch across the yard. A single light is on in an upstairs window, creating a focal point of mystery. The overall mood is unsettling and eerie, cinematic film grain, photorealistic.",
+        "sceneContent": "Dramatic music. A grainy, black and white photo of a seemingly normal house. Text overlay: 'Suburban Nightmare')."
+    },
+    {
+        "imageprompt": "Cinematic, dark, and gritty shot of a messy wooden desk. Scattered, yellowed newspaper clippings are spread across the surface under the harsh light of a desk lamp. The headlines 'Missing Woman' and 'Husband Questioned' are in sharp, clear focus. Other articles are blurred in the background. True crime, investigative aesthetic, high contrast, photorealistic.",
+        "sceneContent": "Cut to: Newspaper headlines flashing across the screen: 'Missing Woman', 'Husband Questioned')."
+    },
+    {
+        "imageprompt": "A suspenseful, cinematic scene from the perspective of a worried neighbor. The focus is on a woman's fearful eyes as she peers through a gap in her vintage lace curtains. In the out-of-focus background, the flashing red and blue lights of a police car reflect off the windows of the house across the street, now surrounded by yellow crime scene tape. Moody, high-contrast lighting, photorealistic.",
+        "sceneContent": "Quick cuts: A police car pulling up to the house. Yellow tape. Close-up of a worried neighbor peering through curtains."
+    },
+    {
+        "imageprompt": "Dramatic, cinematic wide shot of the suburban house at night, now an active crime scene. The house is dark, but cold, sterile blue and white forensic lights glow intensely from within the windows. Yellow police tape is stretched across the front lawn, glistening under a streetlamp. The atmosphere is foreboding and chilling, like a thriller movie poster. Hyper-realistic, 8k.",
+        "sceneContent": "This is the story of...The Willow Creek Conspiracy. Streaming now only on [Your Streaming Service Name]."
+    }
+]
+\`\`\``,
+        },
+      ],
+    },
+    {
+      role: 'user',
+      parts: [
+        {
+          text: `INSERT_INPUT_HERE`,
+        },
+      ],
+    },
+  ];
+
+  const response = await ai.models.generateContentStream({
+    model,
+    config,
+    contents,
+  });
+  let fullText= "";
+  for await (const chunk of response) {
+    if(!chunk?.text){
+      throw new Error("No message in response");
+    }
+    fullText += chunk?.text;
+  }
+  // Remove code block formatting (like ```json ... ```)
+  fullText = fullText.replace(/```json|```/g, "").trim();
+
+  try {
+    const parsed = JSON.parse(fullText);
+    return parsed;
+  } catch (e) {
+    console.error("Failed to parse AI response as JSON:", e);
+    throw new Error("AI response is not valid JSON");
+  }
+}

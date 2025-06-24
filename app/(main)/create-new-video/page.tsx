@@ -48,12 +48,12 @@ const Page = () => {
             uid: user?._id as Id<"users">,
             createdBy: user?.email as string
         }) 
-        console.log("Video data saved to db:", videoRes);
+        // console.log("Video data saved to db:", videoRes);
         
         const res = await axios.post('/api/generate-video-data', {
             ...formData
         }); 
-        console.log("Video generation response:", res.data);
+        // console.log("Video generation response:", res.data);
         setLoading(false);
     }
 
