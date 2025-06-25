@@ -31,7 +31,6 @@ const Page = () => {
     }
     
     const GenerateVideo = async () => {
-
         if (!formData.topic || !formData.script || !formData.videoStyle || !formData.voice || !formData.caption) {
             console.log("Please fill all the fields before generating the video.");
             return;
@@ -51,7 +50,8 @@ const Page = () => {
         // console.log("Video data saved to db:", videoRes);
         
         const res = await axios.post('/api/generate-video-data', {
-            ...formData
+            ...formData,
+            recordId: videoRes
         }); 
         // console.log("Video generation response:", res.data);
         setLoading(false);
