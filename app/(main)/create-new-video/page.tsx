@@ -45,13 +45,14 @@ const Page = () => {
             voice: formData.voice as string,
             caption: formData.caption as CaptionStyle,
             uid: user?._id as Id<"users">,
-            createdBy: user?.email as string
+            createdBy: user?.email as string,
+            credits: user?.credits as number 
         }) 
         // console.log("Video data saved to db:", videoRes);
         
         const res = await axios.post('/api/generate-video-data', {
             ...formData,
-            recordId: videoRes
+            recordId: videoRes,
         }); 
         // console.log("Video generation response:", res.data);
         setLoading(false);
