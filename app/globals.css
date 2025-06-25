@@ -148,3 +148,140 @@ body {
     --sidebar-ring: oklch(0.439 0 0);
   }
 }
+
+@layer components {
+  .app-sidebar-header {
+    @apply text-center;
+
+    .app-sidebar-logo {
+      @apply flex items-center gap-2 p-3 w-full justify-center mt-2;
+
+      h2 {
+        @apply font-semibold text-2xl;
+      }
+    }
+
+    .app-sidebar-subtitle {
+      @apply text-lg text-gray-400 text-center;
+    }
+  }
+
+  .app-sidebar-create-btn-wrapper {
+    @apply mx-5 mt-5;
+  }
+
+  .app-sidebar-separator {
+    @apply mt-4;
+  }
+
+  .app-sidebar-menu-item {
+    @apply mt-3 mx-2;
+
+    .app-sidebar-menu-button {
+      @apply p-5;
+
+      .app-sidebar-menu-link {
+        @apply flex items-center gap-4 p-3;
+      }
+    }
+  }
+
+  .app-sidebar-footer {
+    @apply p-4 border rounded-lg mb-6 bg-gray-800;
+
+    .app-sidebar-footer-credits {
+      @apply flex items-center justify-between;
+
+      h2 {
+        @apply text-gray-400;
+      }
+    }
+
+    .app-sidebar-buy-button {
+      @apply w-full mt-3;
+    }
+  }
+
+  /* Hero section */
+  .hero-section {
+    @apply p-10 flex flex-col items-center justify-center gap-5 mt-24 md:px-2 lg:px-36 xl:px-48;
+  }
+
+  .hero-title {
+    @apply font-semibold text-6xl text-center;
+  }
+
+  .hero-subtitle {
+    @apply mt-4 text-2xl text-center text-gray-300;
+  }
+
+  .hero-buttons {
+    @apply mt-7 gap-8 flex;
+  }
+
+  /* App Header */
+  .app-header {
+    @apply p-4 shadow-md flex items-center justify-between;
+  }
+
+  .app-header-logo {
+    @apply flex items-center gap-3;
+
+    h2 {
+      @apply text-2xl font-bold;
+    }
+  }
+
+  .app-header-user {
+    @apply flex items-center gap-3;
+  }
+
+  /* Sidebar */
+  .app-sidebar-header {
+    @apply text-center;
+  }
+
+  .app-sidebar-logo {
+    @apply flex items-center gap-2 p-3 w-full justify-center mt-2;
+
+    h2 {
+      @apply font-semibold text-2xl;
+    }
+  }
+
+  .app-sidebar-subtitle {
+    @apply text-lg text-gray-400 text-center;
+  }
+
+  .app-sidebar-create-button {
+    @apply mx-5 mt-5;
+  }
+
+  .app-sidebar-separator {
+    @apply mt-4;
+  }
+
+  .app-sidebar-menu-item {
+    @apply mt-3 mx-2;
+  }
+
+  .app-sidebar-menu-button {
+    @apply p-5;
+  }
+
+  .app-sidebar-menu-link {
+    @apply flex items-center gap-4 p-3;
+  }
+
+  .app-sidebar-footer {
+    @apply p-4 border rounded-lg mb-6 bg-gray-800;
+  }
+
+  .app-sidebar-credits {
+    @apply flex items-center justify-between;
+  }
+
+  .app-sidebar-buy-button {
+    @apply w-full mt-3;
+  }
+}
