@@ -31,6 +31,10 @@ const Page = () => {
     }
     
     const GenerateVideo = async () => {
+        if (user?.credits === 0) {
+            console.log("You don't have enough credits to generate a video.Please add credits to your account.");
+            return;
+        }
         if (!formData.topic || !formData.script || !formData.videoStyle || !formData.voice || !formData.caption) {
             console.log("Please fill all the fields before generating the video.");
             return;

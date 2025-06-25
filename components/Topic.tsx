@@ -8,6 +8,7 @@ import { Textarea } from "./ui/textarea";
 import { Loader, SparklesIcon } from "lucide-react";
 import axios from "axios";
 import { ScriptItem } from "@/lib/types";
+import { useAuthContext } from "@/app/Provider";
 
 const Topic = ({
   HandleInputChange,
@@ -18,8 +19,13 @@ const Topic = ({
   const[selectedScript, setSelectedScript] = useState<string>("");
   const[scripts, setScripts] = useState<ScriptItem[]>([]);
   const[loading, setLoading] = useState<boolean>(false);
+  const{ user } = useAuthContext();
 
   const GenerateScript = async () => {
+    if (user?.credits === 0) {
+            console.log("You don't have enough credits to generate a video.Please add credits to your account.");
+            return;
+        }
     setLoading(true);
     try {
         const res = await axios.post("/api/generate-script", {

@@ -148,3 +148,23 @@ export type ImagePormpt = {
     imageprompt: string;
     sceneContent: string;
 }
+
+export interface VideoList {
+  _id: string;
+  _creationTime?: number;
+  audioUrl?: string;
+  caption?: {
+    name: string;
+    style: string;
+  };
+  captionJson?: string;
+  createdBy: string;
+  images?: string[];
+  script?: string;
+  status?: string;
+  title: string;
+  topic: string;
+  uid: string;
+  videoStyle?: string;
+  voice?: string;
+}

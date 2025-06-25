@@ -1,5 +1,5 @@
 import { v } from "convex/values";
-import { mutation } from "./_generated/server";
+import { mutation, query } from "./_generated/server";
 
 export const createVideoData = mutation({
     args: {
@@ -48,5 +48,28 @@ export const updateVideoRecord = mutation({
             status: "completed"
         });
         return result;
+    }
+})
+
+export const getUserVideos = query({
+    args: {
+        uid: v.id("users")
+    },
+    handler: async (ctx, args) => {
+        const res = await ctx.db.query("videoData")
+            .filter(q => q.eq(q.field("uid"), args.uid))
+            .order('desc')
+            .collect();
+        return res;
+    }
+})
+
+export const getVideoById = query({
+    args: {
+        videoId: v.id("videoData")
+    },
+    handler: async (ctx, args) => {
+        const res = await ctx.db.get(args.videoId);
+        return res;
     }
 })
