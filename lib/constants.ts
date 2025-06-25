@@ -143,3 +143,8 @@ export type FormDataType = {
   caption?: CaptionStyle
   script?: string;
 };
+
+export type ImagePormpt = {
+    imageprompt: string;
+    sceneContent: string;
+}

@@ -1,19 +1,7 @@
-import { generate, generateImageScripts } from './../configs/AIModel';
+import { generateImageScripts } from './../configs/AIModel';
 import axios from "axios";
 import { inngest } from "./client";
-import { createClient } from "@deepgram/sdk";
-
-const ImagePromptScript = `Generate Image prompt of {style} style with all details for each scene for 30 second video: script: {script} 
-- Just give specifying image prompt depends on the story line
--don't give camera angle image prompt
-- Follow the following schema and return json data (Max 4-5 images)
--[
-    {
-        imageprompt: '',
-        sceneContent: '<Script Contents>'
-    }
-]
-`;
+import { ImagePormpt } from '@/lib/constants';
 
 export const helloWorld = inngest.createFunction(
   { id: "hello-world" },
@@ -79,7 +67,33 @@ export const GenerateVideoData = inngest.createFunction(
             }
         )
         //Generate images using ai model
+        const generateImages = await step.run(
+            "generateImages",
+            async () => {
+                let images = [];
+                images = await Promise.all(
+                    generateImagePrompts.map(async (imagePrompt: ImagePormpt) => {
+                        const result = await axios.post(BASE_URL+'/api/generate-image',
+                            {
+                                width: 1024,
+                                height: 1024,
+                                input: imagePrompt?.imageprompt,
+                                model: 'sdxl',
+                                aspectRatio:"1:1"
+                            },
+                            {
+                                headers: {
+                                    'x-api-key': process.env.NEXT_PUBLIC_AIGURULAB_API_KEY!, 
+                                    'Content-Type': 'application/json', 
+                                },
+                            });
+                            return result.data.image;
+                    })
+                )
+                return images;
+            }
+        )
         //save all data to db
-        return generateImagePrompts;
+        return generateImages;
     }
 )
