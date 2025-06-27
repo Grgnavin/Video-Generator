@@ -1,6 +1,6 @@
 import { VideoData } from '@/lib/constants'
-import React, { useEffect } from 'react'
-import { useVideoConfig } from 'remotion'
+import React, { useMemo } from 'react'
+import { AbsoluteFill, Audio, Img, interpolate, Sequence, useCurrentFrame, useVideoConfig } from 'remotion'
 
 const RemotionComposition = ({
   videoData,
@@ -10,9 +10,11 @@ const RemotionComposition = ({
   setDurationInFrame: (duration: number) => void;
 }) => {
   const { fps } = useVideoConfig();
-
-  useEffect(() => {
-    if (!videoData?.captionJson) return;
+  const imageList = videoData?.images || [];
+  const frame = useCurrentFrame();
+  // Compute duration once, memoized
+  const totalDuration = useMemo(() => {
+    if (!videoData?.captionJson) return 0;
 
     let captions: { end: number }[] = [];
 
@@ -20,25 +22,61 @@ const RemotionComposition = ({
       captions = JSON.parse(videoData.captionJson);
     } catch (e) {
       console.error("Invalid captionJson format", e);
-      return;
+      return 0;
     }
 
-    if (captions.length === 0) return;
+    if (captions.length === 0) return 0;
 
     const lastCaption = captions[captions.length - 1];
 
-    if (!lastCaption?.end) {
-        return;
-    }
+    if (!lastCaption?.end) return 0;
 
-    const totalDuration = Math.round(lastCaption.end * fps);
-
-    setDurationInFrame(totalDuration);
+    const duration = Math.round(lastCaption.end * fps);
+    setDurationInFrame(duration);
+    return duration;
   }, [videoData, fps, setDurationInFrame]);
 
-  return(
+  return (
     <div>
-        RemoteComposition
+      <AbsoluteFill>
+        {
+          Array.isArray(imageList) && imageList.length > 0 ? (
+            imageList.map((image, idx) => {
+              const startTime = Math.round((idx * totalDuration) / imageList.length);
+              const duration = Math.round(totalDuration / imageList.length);
+              const scale = (index: number) => interpolate(
+                frame,
+                [startTime, startTime + duration/2, startTime + duration],
+                index%2==0 ? [1,1.8, 1] : [1.8,1,1.8],
+                { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' }
+              )
+              return (
+                <Sequence key={idx} from={startTime} durationInFrames={duration}>
+                    <AbsoluteFill>
+                        <Img 
+                            src={image}
+                            style={{
+                                width: '100%',
+                                height: '100%',
+                                objectFit: 'cover',
+                                transform: `scale(${scale(idx)})`
+                            }}
+                        />
+                    </AbsoluteFill>
+                </Sequence>
+              )
+            })
+          ) : (
+            <div className="flex items-center justify-center h-full text-white">
+              <p>No images available for this video.</p>
+            </div>
+          )
+        }
+      </AbsoluteFill>
+      <Audio 
+        src={videoData?.audioUrl || ''}
+        
+      />
     </div>
   )
 };
