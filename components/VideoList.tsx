@@ -10,11 +10,13 @@ import { Id } from '@/convex/_generated/dataModel';
 import { VideoList } from '@/lib/constants';
 import moment from 'moment';
 import { RefreshCwIcon } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 
 const VideoList = () => {
     const[videoList, setVideoList] = useState<VideoList[]>([]);
     const convex = useConvex();
     const { user } = useAuthContext();
+    const router = useRouter();
     const getUserVideos = async () => {
         // fetch all the user videos
         const res = await convex.query(api.VideoData.getUserVideos, {
@@ -70,7 +72,7 @@ const VideoList = () => {
                 <section className='grid grid-col-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 mt-10'>
                     {
                         videoList.map((video, idx) => (
-                            <div key={idx} className='relative'>
+                            <div key={idx} onClick={() => router.push(`/play-video/${video._id}`)} className='relative'>
                                 {
                                     video?.status === "completed" ? (
                                         <div>

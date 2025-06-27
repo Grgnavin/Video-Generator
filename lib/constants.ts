@@ -1,3 +1,4 @@
+import { Id } from "@/convex/_generated/dataModel";
 import { HomeIcon, LucideFileVideo, Search, WalletCards } from "lucide-react";
 
 export const MenuItems = [
@@ -168,3 +169,21 @@ export interface VideoList {
   videoStyle?: string;
   voice?: string;
 }
+
+export type VideoData = {
+    _id: Id<"videoData">;
+    _creationTime: number;
+    images?: string | undefined;
+    audioUrl?: string | undefined;
+    captionJson?: string | undefined;
+    status?: string | undefined;
+    title: string;
+    topic: string;
+    script: string;
+    videoStyle: string;
+    caption: CaptionStyle;
+    voice: string;
+    uid: Id<"users">;
+    createdBy: string;
+} | null
+
