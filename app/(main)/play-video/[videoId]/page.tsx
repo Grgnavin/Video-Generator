@@ -27,14 +27,14 @@ const PlayVideo = () => {
   }, [videoId])
 
   return (
-    <section className='grid grid-cols-1 md:grid-cols-2 gap-10'>
+    <section className='grid grid-cols-1 md:grid-cols-2'>
         <div>
             {/* Remotion player */}
-            <RemotionPlayer videoData={videoData} />
+            <RemotionPlayer videoData={videoData!} />
         </div>
         <div>
             {/* videoInfo */}
-            <VideoInfo />
+            <VideoInfo videoData={videoData!} />
         </div>
     </section>
   )
