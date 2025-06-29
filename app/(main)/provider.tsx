@@ -5,18 +5,20 @@ import { SidebarProvider } from '@/components/ui/sidebar'
 import React, { useEffect } from 'react'
 import { useAuthContext } from '../Provider'
 import { useRouter } from 'next/navigation'
+import LoadingScreen from '@/components/LoadingScreen'
 
 const DashBoardProvider = ({ children }: { children: React.ReactNode }) => {
-    const { user } = useAuthContext();
+    const { user, loading } = useAuthContext();
     const router = useRouter();
+
     useEffect(() => {
-        const checkUserAuthentication = () => {
-            if(!user){
-                router.push('/');
-            }
-        };
-        checkUserAuthentication();
-    }, [user])
+        if (!loading && !user) {
+        router.push("/");
+        }
+    }, [loading, user, router]);
+    if (loading) {
+        return <LoadingScreen />; 
+    }
   return (
     <div>
         <SidebarProvider>

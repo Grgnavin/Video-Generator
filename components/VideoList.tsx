@@ -16,6 +16,7 @@ const VideoList = () => {
     const[videoList, setVideoList] = useState<VideoList[]>([]);
     const convex = useConvex();
     const { user } = useAuthContext();
+
     const router = useRouter();
     const getUserVideos = async () => {
         // fetch all the user videos
@@ -31,9 +32,10 @@ const VideoList = () => {
     }
 
     useEffect(() => {
-        if (user) {
-            getUserVideos();
+        if (!user) {
+            router.push('/');
         }
+        getUserVideos();
     }, [user]);
 
     const getPendingVideoStatus = async (pendingVideo: VideoList) => {

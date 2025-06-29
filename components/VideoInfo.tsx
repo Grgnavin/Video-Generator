@@ -1,11 +1,18 @@
+"use client";
 import { VideoData } from '@/lib/constants'
-import { ArrowLeft, DownloadIcon } from 'lucide-react'
+import { ArrowLeft, CheckCheckIcon, Link2Icon } from 'lucide-react'
 import Link from 'next/link'
-import React from 'react'
+import React, { useState } from 'react'
 import { Separator } from './ui/separator'
 import { Button } from './ui/button'
 
 const VideoInfo = ({ videoData } : { videoData: VideoData }) => {
+  const[copied, setCopied] = useState<boolean>(false);
+  const handleCopy = () => {
+    navigator.clipboard.writeText(window.location.href);
+    setCopied(true);
+  }
+
   return (
     <section className='p-5 border rounded-xl'>
       <Link href={'/dashboard'}>
@@ -20,7 +27,14 @@ const VideoInfo = ({ videoData } : { videoData: VideoData }) => {
         <p className='text-gray-500'>Script: {videoData?.script}</p>
         <h2>Video Style: {videoData?.videoStyle}</h2>
         <Separator className='my-2' />
-        <Button><DownloadIcon /> Export & Download</Button>
+        <Button onClick={handleCopy} > 
+            {
+              copied ? 
+              <CheckCheckIcon />
+              : <Link2Icon />
+            }
+            Copy the Link & Share
+          </Button>
       </div>
     </section>
   )

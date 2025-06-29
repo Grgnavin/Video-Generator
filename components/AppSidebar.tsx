@@ -18,7 +18,7 @@ const AppSidebar = () => {
     <Sidebar>
       <SidebarHeader>
         <div className="app-sidebar-header">
-          <section className="app-sidebar-logo">
+          <section className="app-sidebar-logo cursor-pointer" onClick={() => window.location.href = '/dashboard'}>
             <Image src="/logo.svg" alt="Logo" width={40} height={50} />
             <h2>Video Gen</h2>
           </section>

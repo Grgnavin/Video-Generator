@@ -8,7 +8,6 @@ import Link from 'next/link'
 
 const Header = () => {
   const { user } = useAuthContext()
-  
   return (
     <header className="app-header">
       <figure className="app-header-logo">

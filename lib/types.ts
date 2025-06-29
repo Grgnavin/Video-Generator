@@ -9,6 +9,7 @@ export interface DbUser {
 
 export interface AuthContextType {
   user: DbUser | null;
+  loading: boolean;
 }
 
 export interface ScriptItem {
