@@ -1,10 +1,25 @@
 "use client";
 import { useAuthContext } from '@/app/Provider';
 import { creditOptions } from '@/lib/constants';
+import axios from 'axios';
 import React from 'react'
 
 const BillingPage = () => {
    const { user } = useAuthContext();
+     const handleBuyNow = async (credits: number, price: number) => {
+        try {
+        const { data } = await axios.post("/api/checkout_sessions", {
+            credits,
+            price,
+            email: user?.email
+        })
+        if (data.url) {
+            window.location.href = data.url; // Redirect to Stripe checkout page
+        }
+        } catch (error) {
+            console.error(error);
+        }
+  };
 
   return (
     <div className="text-white flex flex-col items-center p-6">
@@ -29,7 +44,10 @@ const BillingPage = () => {
                 </div>
                 <p className="font-medium">{option.amount} Credits</p>
               </div>
-              <button className="bg-white cursor-pointer text-black px-4 py-1 rounded font-semibold hover:bg-gray-200">
+              <button 
+                    className="bg-white cursor-pointer text-black px-4 py-1 rounded font-semibold hover:bg-gray-200"
+                    onClick={() => handleBuyNow(option.amount, option.price)}
+                >
                 {option.price}$ Buy Now
               </button>
             </div>

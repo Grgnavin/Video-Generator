@@ -7,6 +7,8 @@ export default defineSchema({
         email: v.string(),
         pictureUrl: v.string(),
         credits: v.number(), 
+        lastSessionId: v.optional(v.string()),
+        pendingCredits: v.optional(v.number()),
     }),
     videoData: defineTable({
         title: v.string(),
