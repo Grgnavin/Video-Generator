@@ -17,7 +17,7 @@ const Header = () => {
           width={35}
           height={35}
         />
-        <h2>Video Gen</h2>
+        <h2>ShortFusion AI</h2>
       </figure>
       <section>
         {!user ? (

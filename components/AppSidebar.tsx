@@ -20,7 +20,7 @@ const AppSidebar = () => {
         <div className="app-sidebar-header">
           <section className="app-sidebar-logo cursor-pointer" onClick={() => window.location.href = '/dashboard'}>
             <Image src="/logo.svg" alt="Logo" width={40} height={50} />
-            <h2>Video Gen</h2>
+            <h2>ShortFusion AI</h2>
           </section>
           <h2 className="app-sidebar-subtitle">AI short video Generator</h2>
         </div>
