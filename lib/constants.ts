@@ -131,6 +131,13 @@ export const CaptionOptions = [
   }
 ];
 
+export const creditOptions = [
+    { amount: 10, price: 1 },
+    { amount: 50, price: 5 },
+    { amount: 100, price: 9 },
+    { amount: 200, price: 15 },
+  ];
+
 export type CaptionStyle = {
   name: string;
   style: string;

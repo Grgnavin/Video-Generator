@@ -19,3 +19,4 @@ export interface ScriptItem {
 export interface ScriptResponse {
   script: ScriptItem[]
 };
+
