@@ -4,7 +4,6 @@ import Stripe from 'stripe';
 const stripe = new Stripe(process.env.NEXT_PUBLIC_STRIPE_SECRET_KEY!, {
   apiVersion: '2025-05-28.basil', 
 });
-
 export async function POST(request: Request) {
   try {
     const { credits, price, email } = await request.json();
@@ -17,12 +16,12 @@ export async function POST(request: Request) {
     }
 
     const session = await stripe.checkout.sessions.create({
-      payment_method_types: ['card'],
-      mode: 'payment',
+      payment_method_types: ["card"],
+      mode: "payment",
       line_items: [
         {
           price_data: {
-            currency: 'usd',
+            currency: "usd",
             product_data: {
               name: `${credits} Video Credits`,
             },
@@ -31,9 +30,15 @@ export async function POST(request: Request) {
           quantity: 1,
         },
       ],
-      success_url: `${process.env.NEXT_PUBLIC_APP_URL}/success?credits=${credits}&email=${encodeURIComponent(email)}`,
+      metadata: {
+        credits: String(credits),
+        email: email,
+      },
+      success_url: `${process.env.NEXT_PUBLIC_APP_URL}/success?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${process.env.NEXT_PUBLIC_APP_URL}/cancel`,
     });
+
+
     return NextResponse.json({ url: session.url });
   } catch (error) {
     console.error(error);

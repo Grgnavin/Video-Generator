@@ -14,7 +14,7 @@ const BillingPage = () => {
             email: user?.email
         })
         if (data.url) {
-            window.location.href = data.url; // Redirect to Stripe checkout page
+            window.location.href = data.url;
         }
         } catch (error) {
             console.error(error);
