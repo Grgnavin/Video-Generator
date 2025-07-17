@@ -12,6 +12,7 @@ import { CaptionStyle, FormDataType } from '@/lib/constants';
 import axios from 'axios';
 import { useMutation } from 'convex/react';
 import { Loader2Icon, WandSparkles } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 import React, { useState } from 'react'
 
 const Page = () => {
@@ -19,6 +20,7 @@ const Page = () => {
     const[loading, setLoading] = useState<boolean>(false);
     const createInitialVideoRecord = useMutation(api.VideoData.createVideoData);
     const{ user } = useAuthContext();
+    const router = useRouter();
     const HandleInputChange = (fieldName: string, fieldValue: string | CaptionStyle) => {
         setFormData((prevData) => {
             const newData = {
@@ -60,6 +62,7 @@ const Page = () => {
         }); 
         // console.log("Video generation response:", res.data);
         setLoading(false);
+        router.push("/dashboard");
     }
 
   return (
@@ -79,7 +82,7 @@ const Page = () => {
                         disabled={loading} 
                         onClick={GenerateVideo}> 
                     {loading ? <Loader2Icon className='animate-spin' /> : <WandSparkles />}
-                    Generate Button
+                    Generate Video
                 </Button>
             </div>
             <div className='col-span-1'>

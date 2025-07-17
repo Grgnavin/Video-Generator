@@ -15,9 +15,6 @@ const Auth = ({ children }: { children: React.ReactNode }) => {
           console.warn('No credential returned from Google sign-in');
           return;
         }
-        const token = credential.accessToken;
-        const user = result.user;
-        console.log('Signed in user:', user);
       })
       .catch((error) => {
         // Specifically handle popup closed case
